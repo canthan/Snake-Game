@@ -1,0 +1,246 @@
+* {
+  box-sizing: border-box;
+  margin:0;
+}
+
+html {
+  font-family: sans-serif;
+  font-size: 10px;
+  height:100%;
+  width:100%;
+}
+
+h1{
+   text-align: center;
+   font-size:4em;
+   margin:0;
+   text-shadow: 3px 3px 3px white, 3px -3px 3px white, -3px 3px 3px white, -3px -3px 3px white;
+ }
+
+h2{
+  padding-top:10%;
+  text-align: center;
+  font-size:3em;
+}
+
+body {
+  background-image: url("../images/snake.jpg");
+  background-size:cover;
+  margin: 0 auto;
+  width: 100%;
+}
+
+p {
+  text-align: center;
+}
+
+.headerM{
+  font-size: 6em;
+  height:6vh;
+}
+
+.board, .boardM {
+  background-color: rgb(153, 204, 255);
+  border: 1px solid black;
+}
+
+@media only screen and (min-device-width: 801px){
+
+    html{
+        min-width:500px;
+    }
+
+  .board {
+    margin: 0 auto;
+    width: 506px;
+  }
+
+  .header{
+    height:auto;
+  }
+
+  .canvas {
+    box-sizing: content-box;
+    border: 3px solid black;
+    width: 500px;
+    margin: 0 auto;
+    height: 500px;
+    background-color: lightgrey;
+  }
+
+  .stats {
+    margin: 0 auto;
+    width: 506px;
+  }
+
+  .stats-cookies, .stats-time, .stats-speed {
+    font-size: 2em;
+    display: flex;
+    float: left;
+    width: 30%;
+    margin-left: 3%;
+  }
+
+
+
+  .msgText {
+    padding: 0;
+  }
+
+      .msgBox {
+          position: relative;
+          top: -450px;
+          width: 400px;
+          height: 400px;
+          margin: 0 auto;
+          border-radius: 100px;
+          background-color: white;
+      }
+
+      .msgButton {
+          position: relative;
+          top: 50px;
+          left: 75px;
+          border: 2px black solid;
+          border-radius: 125px;
+          width: 250px;
+          height: 250px;
+          font-size: 2.5em;
+          padding: 25px;
+          background-color: lightgreen;
+          outline: none;
+          text-align: center;
+      }
+
+    .mButtons{
+        visibility: hidden;
+    }
+  }
+
+  @media only screen and (max-device-width: 800px) {
+
+    #msgBox p {
+      display:none;
+    }
+      .boardM {
+          margin: 0 auto;
+          width: 100vw;
+      }
+
+      .canvasM {
+          box-sizing: border-box;
+          border: 3px solid black;
+          width: 100vw;
+          margin: 0 auto;
+          /* height: 100%;*/
+        background-color: lightgrey;
+    }
+
+    .statsM {
+        margin: 0 auto;
+        width: 100vw;
+    }
+
+    .stats-cookiesM, .stats-timeM, .stats-speedM {
+        font-size: 3em;
+        display: flex;
+        float: left;
+        width: 30vw;
+        height: 4vh;
+        margin-left: 3%;
+    }
+
+    .msgTextM {
+        padding: 0;
+    }
+
+    .mButtonM {
+        height: calc((90vh - 100vw) / 3);
+        width: 80%;
+        margin: 0 auto;
+        background-color: aliceblue;
+        background-repeat: no-repeat;
+        background-position: center;
+        border: 2px black solid;
+        border-radius: 10vw;
+    }
+
+    .msgBoxM {
+        position: absolute;
+        left: 20%;
+        top: 20%;
+        width: 60vw;
+        height: 60vw;
+        margin: 0 auto;
+        border-radius: 10vh;
+        background-color: white;
+    }
+
+    .msgButton {
+        position: relative;
+        top: 10vw;
+        left: 10vw;
+        border: 2px black solid;
+        border-radius: 40vw;
+        width: 40vw;
+        height: 40vw;
+        font-size: 5vw;
+        padding: 25px;
+        background-color: lightgreen;
+        outline: none;
+        text-align: center;
+    }
+}
+
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.row{
+  width:100vw;
+  display:flex;
+}
+
+.mButtons{
+    width:33vw;
+}
+
+#mButtonL, #mButtonR{
+    margin-top:calc((90vh - 100vw)/3);
+  }
+
+#mButtonB, #mButtonT{
+  margin-top:3vh;
+}
+
+.msgButton:hover{
+    background-color: green;
+    font-size: 3em;
+    cursor: pointer;
+}
+
+#msgButton, .msgButton{
+    transition: 0.5s all;
+}
+
+.msgButtonOver{
+    top:0;
+}
+
+#msgBox p {
+  position:absolute;
+  bottom:0;
+  left:50%;
+  transform: translateX(-50%);
+  text-align: left;
+  font-size:1.5em;
+  color: black;
+}
+
+#mButtonT {background-image: url(../images/arrowT.png);}
+#mButtonB {background-image: url(../images/arrowB.png);}
+#mButtonR {background-image: url(../images/arrowR.png);}
+#mButtonL {background-image: url(../images/arrowL.png);}
+

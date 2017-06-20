@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="Author" content="Andrzej Globisz">
+    <meta name="Description" content="Snake Game">
+    <meta name="viewport" content="user-scalable=no">
+    <title>Snake</title>
+    <link href="styles/styles.css" type="text/css" rel="stylesheet">
+    
+  </head>
+  <body>
+
+    <h1 class="header headerM">SNAKE</h1>
+
+      <div class="stats statsM">
+
+        <div id="stats-cookies" class="stats-cookies stats-cookiesM">
+          <p>Points: 0</p>
+        </div>
+
+        <div id="stats-time" class="stats-time stats-timeM">
+          <p>Time: 0</p>
+        </div>
+
+        <div id="stats-speed" class="stats-speed stats-speedM">
+          <p>Speed: 0</p>
+        </div>
+
+      </div>
+
+    <div class="board boardM">
+    <canvas id="canvas" class="canvas canvasM" width="500px" height="500px"></canvas>
+    </div>
+
+    <div id="msgBox" class="msgBox msgBoxM">
+      <button id="msgButton" class="msgButton msgButtonM">START GAME</button>
+      <p>Controls:<br>
+                   W - up<br> 
+                   S - down<br>
+                   A - left<br> 
+                   D- right</p>
+    </div>
+
+    <div class="row">
+    <div class="mButtons">
+      <div id="mButtonL" class="mButton mButtonM"></div>
+
+    </div>
+
+    <div class="mButtons">
+      <div id="mButtonT" class="mButton mButtonM"></div>
+      <div id="mButtonB" class="mButton mButtonM"></div>
+    </div>
+
+    <div class="mButtons">
+      <div id="mButtonR" class="mButton mButtonM"></div>
+    </div>
+  </div>
+
+  </body>
+  <script src='scripts/scripts.js'></script>
+</html>
