@@ -38,6 +38,15 @@ function Cookie (X, Y) {
         X,
         Y
     };
+
+    this.getX = function(){
+        return this.position.X;
+    };
+
+    this.getY = function(){
+        return this.position.Y;
+    };
+
 };
 
 //=============================== DRAW A COOKIE ============================================
@@ -45,7 +54,7 @@ Cookie.prototype.draw = function() {
 
     ctx.fillStyle = 'black';
     ctx.beginPath();
-    ctx.arc(this.position.X, this.position.Y, fieldRadius, 0, (Math.PI*2), true);
+    ctx.arc(this.getX(), this.getY(), fieldRadius, 0, (Math.PI*2), true);
     ctx.closePath();
     ctx.fill();
 };
@@ -53,7 +62,7 @@ Cookie.prototype.draw = function() {
 //=============================== CHECK IF COOKIE IS ON THE EMPTY FIELD ============================================
 Cookie.prototype.checkIfEmpty = function() {
     for (var i = 0; i < snake.length; i++) {
-        if (snake[i].position.X === this.position.X && snake[i].position.Y === this.position.Y) {
+        if (snake[i].getX() === this.getX() && snake[i].getY() === this.getY()) {
             return false;
         }
     }
@@ -72,18 +81,17 @@ function cookieNew(){
 //=============================================================================================
 //=============================== SNAKE OBJECT ============================================
 function Snake (X, Y) {
-    Cookie.call(this, X, Y);
+    Cookie.call(this, X, Y,);
 }
 
 Snake.prototype = Object.create(Cookie.prototype);
-Snake.prototype.constructor = Snake;
 
 //=============================== DRAW SNAKE ============================================
 Snake.prototype.draw = function() {
 
     ctx.fillStyle = 'green';
-    ctx.fillRect(this.position.X - fieldRadius,
-                 this.position.Y - fieldRadius,
+    ctx.fillRect(this.getX() - fieldRadius,
+                 this.getY() - fieldRadius,
                  fieldSize,
                  fieldSize);
 };
@@ -105,24 +113,24 @@ function rndPosition(){
 function snakeHeadPosition(){
     switch (direction){
         case keyUp:
-            snakeNew(snake[0].position.X, snake[0].position.Y - fieldSize);
+            snakeNew(snake[0].getX(), snake[0].getY() - fieldSize);
             break;
         case keyDown:
-            snakeNew(snake[0].position.X, snake[0].position.Y + fieldSize);
+            snakeNew(snake[0].getX(), snake[0].getY() + fieldSize);
             break;
         case keyRight:
-            snakeNew(snake[0].position.X + fieldSize, snake[0].position.Y);
+            snakeNew(snake[0].getX() + fieldSize, snake[0].getY());
             break;
         case keyLeft:
-            snakeNew(snake[0].position.X - fieldSize, snake[0].position.Y);
+            snakeNew(snake[0].getX() - fieldSize, snake[0].getY());
             break;
     }
 }
 //=============================== ERASE THE TAIL ============================================
 function eraseTail(){
 ctx.fillStyle = 'lightgrey';
-ctx.fillRect(snake[snake.length-1].position.X - fieldRadius,
-    snake[snake.length-1].position.Y - fieldRadius,
+ctx.fillRect(snake[snake.length-1].getX()- fieldRadius,
+    snake[snake.length-1].getY() - fieldRadius,
     fieldSize,
     fieldSize);
 }
@@ -131,7 +139,7 @@ function ateCookie() {
     let speedChange = 5;
     let speedFactor = 0.8;
     for (var i = 0; i < cookies.length; i++) {
-        if (snake[0].position.X === cookies[i].position.X && snake[0].position.Y === cookies[i].position.Y) {
+        if (snake[0].getX() === cookies[i].getX() && snake[0].getY() === cookies[i].getY()) {
             erase = false;
             cookies.splice(i, 1);
             points++;
@@ -150,8 +158,8 @@ function ateCookie() {
 //=============================== CHECK IF SNAKE ATE HIMSELF ============================================
 function ateHimself() {
     for (var i = 1; i < snake.length; i++) {
-        if (snake[0].position.X === snake[i].position.X) {
-            if (snake[0].position.Y === snake[i].position.Y) {
+        if (snake[0].getX() === snake[i].getX()) {
+            if (snake[0].getY() === snake[i].getY()) {
                 endGame();
             }
         }
@@ -159,10 +167,10 @@ function ateHimself() {
 }
 //=============================== CHECK IF SNAKE HIT THE WALL ============================================
 function hitTheWall() {
-    if (snake[0].position.X > boardSize
-        || snake[0].position.X < 0
-        || snake[0].position.Y > boardSize
-        || snake[0].position.Y < 0) {
+    if (snake[0].getX() > boardSize
+        || snake[0].getX() < 0
+        || snake[0].getY() > boardSize
+        || snake[0].getY() < 0) {
         endGame();
     }
 }
