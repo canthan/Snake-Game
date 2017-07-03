@@ -31,6 +31,7 @@ var time = 0;
 var speed = 1;
 var speedInterval = 120;
 var erase = true; //If snake should be shortened
+var canChangeDir = true;
 
 //=============================== COOKIE OBJECT ============================================
 function Cookie (X, Y) {
@@ -46,9 +47,7 @@ function Cookie (X, Y) {
     this.getY = function(){
         return this.position.Y;
     };
-
 };
-
 //=============================== DRAW A COOKIE ============================================
 Cookie.prototype.draw = function() {
 
@@ -58,7 +57,6 @@ Cookie.prototype.draw = function() {
     ctx.closePath();
     ctx.fill();
 };
-
 //=============================== CHECK IF COOKIE IS ON THE EMPTY FIELD ============================================
 Cookie.prototype.checkIfEmpty = function() {
     for (var i = 0; i < snake.length; i++) {
@@ -68,7 +66,6 @@ Cookie.prototype.checkIfEmpty = function() {
     }
     return true;
 };
-
 //=============================== GENERATE NEW COOKIE ============================================
 function cookieNew(){
     let cookie = new Cookie(rndPosition(),rndPosition());
@@ -76,6 +73,12 @@ function cookieNew(){
         cookie.draw();
         cookies.push(cookie);
     }
+}
+//=============================== GENERATE RANDOM POSITION ============================================
+function rndPosition(){
+    let pos = Math.floor(Math.random() * boardSize);
+    pos -= (pos % fieldSize) + fieldRadius;
+    return pos;
 }
 
 //=============================================================================================
@@ -94,21 +97,8 @@ Snake.prototype.draw = function() {
                  this.getY() - fieldRadius,
                  fieldSize,
                  fieldSize);
-};
-
-//=============================== SNAKE MOVEMENT ============================================
-function snakeNew(posX, posY){
-    let snakePiece = new Snake(posX,posY);
-    snakePiece.draw();
-    snake.unshift(snakePiece);
 }
 
-//=============================== GENERATE RANDOM POSITION ============================================
-function rndPosition(){
-    let pos = Math.floor(Math.random() * boardSize);
-    pos -= (pos % fieldSize) + fieldRadius;
-    return pos;
-}
 //=============================== NEW SNAKE HEAD POSITION ============================================
 function snakeHeadPosition(){
     switch (direction){
@@ -126,13 +116,11 @@ function snakeHeadPosition(){
             break;
     }
 }
-//=============================== ERASE THE TAIL ============================================
-function eraseTail(){
-ctx.fillStyle = 'lightgrey';
-ctx.fillRect(snake[snake.length-1].getX()- fieldRadius,
-    snake[snake.length-1].getY() - fieldRadius,
-    fieldSize,
-    fieldSize);
+//=============================== SNAKE MOVEMENT ============================================
+function snakeNew(posX, posY){
+    let snakePiece = new Snake(posX,posY);
+    snakePiece.draw();
+    snake.unshift(snakePiece);
 }
 //=============================== CHECK IF SNAKE ATE COOKIE ============================================
 function ateCookie() {
@@ -155,6 +143,14 @@ function ateCookie() {
         }
     }
 }
+//=============================== ERASE THE TAIL ============================================
+function eraseTail(){
+ctx.fillStyle = 'lightgrey';
+ctx.fillRect(snake[snake.length-1].getX()- fieldRadius,
+    snake[snake.length-1].getY() - fieldRadius,
+    fieldSize,
+    fieldSize);
+}
 //=============================== CHECK IF SNAKE ATE HIMSELF ============================================
 function ateHimself() {
     for (var i = 1; i < snake.length; i++) {
@@ -164,6 +160,7 @@ function ateHimself() {
             }
         }
     }
+    canChangeDir = true;
 }
 //=============================== CHECK IF SNAKE HIT THE WALL ============================================
 function hitTheWall() {
@@ -253,12 +250,15 @@ function endGame(){
 //=============================== CHANGE DIRECTION ============================================
 function changeDir(){
     let x = event.keyCode;
-
-    if ((direction === keyUp || direction === keyDown) && (x === keyRight || x === keyLeft)){
-        direction = x;
-    }
-    if ((direction === keyRight || direction === keyLeft) && (x === keyUp || x === keyDown)){
-        direction = x;
+    if (canChangeDir){
+        if ((direction === keyUp || direction === keyDown) && (x === keyRight || x === keyLeft)){
+            direction = x;
+            canChangeDir = false;
+        }
+        if ((direction === keyRight || direction === keyLeft) && (x === keyUp || x === keyDown)){
+            direction = x;
+            canChangeDir = false;
+        }
     }
 }
 //=============================== FUNCTION TIMER ============================================
@@ -269,26 +269,30 @@ function clock(){
 
 //=============================== FUNCTION - BUTTONS FOR MOBILE ============================================
 function lClick() {
-    if (direction === keyUp || direction === keyDown) {
+    if ((direction === keyUp || direction === keyDown)&&canChangeDir) {
         direction = keyLeft;
+        canChangeDir = false;
     }
 }
 
 function tClick() {
-    if (direction === keyRight || direction === keyLeft) {
+    if ((direction === keyRight || direction === keyLeft)&&canChangeDir) {
         direction = keyUp;
+        canChangeDir = false;
     }
 }
 
 function bClick() {
-    if (direction === keyRight || direction === keyLeft) {
+    if ((direction === keyRight || direction === keyLeft)&&canChangeDir) {
         direction = keyDown;
+        canChangeDir = false;
     }
 }
 
 function rClick() {
-    if (direction === keyUp || direction === keyDown) {
+    if ((direction === keyUp || direction === keyDown)&&canChangeDir) {
         direction = keyRight;
+        canChangeDir = false;
     }
 }
 
